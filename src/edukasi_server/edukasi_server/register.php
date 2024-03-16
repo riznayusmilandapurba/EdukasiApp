@@ -9,7 +9,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $nama = $_POST['nama'];
     $username = $_POST['username'];
-    $password = md5($_POST['password']); 
+    $password = md5($_POST['password']);
     $email = $_POST['email'];
     $nohp = $_POST['nohp'];
 
@@ -17,7 +17,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     $result = mysqli_query($koneksi, $cek);
 
     if(mysqli_num_rows($result) > 0){
-        // Jika sudah digunakan, kirim respons
         $response['value'] = 2;
         $response['message'] = "Username atau email telah digunakan";
     } else {
@@ -30,7 +29,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
             $response['message'] = "Berhasil didaftarkan";
         } else {
             $response['value'] = 0;
-            $response['message'] = "Gagal didaftarkan";
+            $response['message'] = "Gagal didaftarkan: " . mysqli_error($koneksi);
         }
     }
 } else {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 12 Mar 2024 pada 16.39
+-- Waktu pembuatan: 16 Mar 2024 pada 21.30
 -- Versi server: 10.4.19-MariaDB
 -- Versi PHP: 7.4.19
 
@@ -31,7 +31,7 @@ CREATE TABLE `berita` (
   `id` int(11) NOT NULL,
   `judul` varchar(50) NOT NULL,
   `berita` text NOT NULL,
-  `gambar` varchar(25) NOT NULL
+  `gambar` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -65,10 +65,11 @@ CREATE TABLE `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id`, `nama`, `nobp`, `nohp`, `email`, `tanggal_input`) VALUES
-(1, 'Sarah Johnson', 'BP123456', '081234567890', 'sarahjohnson@gmail.com', '2024-03-12 10:39:08'),
 (2, 'Michael Smith', 'BP654321', '085678901234', 'michaelsmith@gmail.com', '2024-03-12 10:39:08'),
-(3, 'Emily Brown', 'BP987654', '087654321098', 'emilybrown@gmail.com', '2024-03-12 10:41:16'),
-(4, 'David Taylor', 'BP234567', '089012345678', 'davidtaylor@gmail.com', '2024-03-12 10:41:16');
+(3, 'Emily Brown1', 'BP9876541', '087654321098', 'emilybrown1@gmail.com', '2024-03-12 10:41:16'),
+(4, 'David Taylor', 'BP234567', '089012345678', 'davidtaylor@gmail.com', '2024-03-12 10:41:16'),
+(5, 'Olla Western', '123', '1234567890', 'olla@gmail.com', '0000-00-00 00:00:00'),
+(6, 'Hitachi', '123', '1234', 'hitachi@gmail.com', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -80,7 +81,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `username` varchar(25) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` text NOT NULL,
   `email` varchar(50) NOT NULL,
   `nohp` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -90,9 +91,26 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `nama`, `username`, `password`, `email`, `nohp`) VALUES
-(1, 'Emily', 'emily123', '$2y$10$4Oc5ZkfWT6BbBcNO.nKFouv3Lb42A3kCcXcTccK.w9u', 'emily@gmail.com', '082234567890'),
+(1, 'Susan23', 'susan123', '12345678', 'susan13@gmail.com', '123456789'),
 (2, 'Sarah', 'sarah123', '25d55ad283aa400af464c76d713c07ad', 'sarah@gmail.com', '081298347856'),
-(3, 'John', 'john123', '25d55ad283aa400af464c76d713c07ad', 'john@gmail.com', '081234567890');
+(3, 'John', 'john123', '25d55ad283aa400af464c76d713c07ad', 'john@gmail.com', '081234567890'),
+(4, 'Kenedy', 'kenedy123', '25d55ad283aa400af464c76d713c07ad', 'kenedy@gmail.com', '081234567890'),
+(5, 'rizna', 'rizna123', '25d55ad283aa400af464c76d713c07ad', 'rizna@gmail.com', '082293763630'),
+(6, 'yusmi', 'yusmi123', '25d55ad283aa400af464c76d713c07ad', 'yusmi@gmail.com', '087723456789'),
+(7, 'fitri', 'fitri123', '25d55ad283aa400af464c76d713c07ad', 'fitri@gmail.com', '08229376360'),
+(8, 'nora', 'nora123', 'd959caadac9b13dcb3e609440135cf54', 'nora@gmail.com', '123456789012'),
+(9, 'Sora', 'sora123', '25d55ad283aa400af464c76d713c07ad', 'soragmail.com', '081234567890'),
+(10, 'kim', 'kim123', '$2y$10$LpSSvjlqy3fesjPO5QnVy.gBGj2X2CRva9QkWl/ShQA', 'kim@gmail.com', '081234567890'),
+(11, 'ana', 'ana12', '$2y$10$KFx0QG8QPtM13tR/zQ2DleA8NtaOMXOhvMIKDKrX7JX', 'ana@gmail.com', '134567899098'),
+(12, 'ki', 'ki123', '$2y$10$wJzSwQOgRECYItXjrLcZR.rdGc5HykAHw4lMUX5/7U4', 'ki@gmail.com', '081234567890'),
+(13, 'siti', 'siti123', '$2y$10$u9nTtAMyvdyvwa/ALt50LekhA8YIXQl7v69rNcnT2Tj', 'siti@gmail.com', '12345678'),
+(14, 'nike', 'nike123', '$2y$10$.5Y5ZbnM5IZhHWyXcFRr8eMiZNiNh501mzQZVagob.W', 'nike@gmail.com', '1234567890'),
+(15, 'lusi', 'lusi123', '$2y$10$NVxth65aTa78BPtbaoRuu.iQt9ZduR4WMMcx2o/m2dL', 'lusi@gmail.com', '1234567890'),
+(16, 'lita', 'lita123', '$2y$10$/7VkV2uHL22NwchVXpMeDuVIsKgnTtnm6iUE.2rQ5FyDGV6LxFnWO', 'lita@gmail.com', '1234567890'),
+(17, 'yudi', 'yudi123', '$2y$10$GNnA9mY.FDCDzyqAcdgKpu7LEJ1TLmRFqJRlpJMy2fUZ.z6cwC6ve', 'yudi@gmail.com', '081234567890'),
+(18, 'budi', 'budi123', '202cb962ac59075b964b07152d234b70', 'budi@gmail.com', '081234567890'),
+(19, 'hendra', 'hendra1', '202cb962ac59075b964b07152d234b70', 'hendra@gmail.com', '1234567890'),
+(20, 'alan', 'alan1', '202cb962ac59075b964b07152d234b70', 'alan@gmail.com', '123');
 
 --
 -- Indexes for dumped tables
@@ -130,13 +148,13 @@ ALTER TABLE `berita`
 -- AUTO_INCREMENT untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

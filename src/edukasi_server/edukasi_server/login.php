@@ -16,8 +16,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 	if(isset($result)){
 		$response['value'] = 1;
 		$response['message'] = "berhasil login";
-		$response['username'] = $result['username'];
 		$response['nama'] = $result['nama'];
+		$response['username'] = $result['username'];
+		$response['email'] = $result['email'];
+		$response['nohp'] = $result['nohp'];
 		$response['id'] = $result['id'];
 		echo json_encode($response);
 	} else {

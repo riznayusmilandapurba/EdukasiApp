@@ -47,13 +47,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://192.168.0.104/edukasi_server/getBerita.php",
+					"raw": "http://192.168.0.102/edukasi_server/getBerita.php",
 					"protocol": "http",
 					"host": [
 						"192",
 						"168",
 						"0",
-						"104"
+						"102"
 					],
 					"path": [
 						"edukasi_server",
@@ -143,28 +143,22 @@
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "username",
-							"value": "john123",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "12345678",
-							"type": "text"
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"kim123\",\r\n    \"password\": \"12345678\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
 						}
-					]
+					}
 				},
 				"url": {
-					"raw": "http://192.168.0.104/edukasi_server/login.php",
+					"raw": "http://192.168.0.102/edukasi_server/login.php",
 					"protocol": "http",
 					"host": [
 						"192",
 						"168",
 						"0",
-						"104"
+						"102"
 					],
 					"path": [
 						"edukasi_server",
@@ -234,6 +228,127 @@
 						}
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "pegawai",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "pegawai",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nama",
+							"value": "Olla Western",
+							"type": "text"
+						},
+						{
+							"key": "nobp",
+							"value": "123",
+							"type": "text"
+						},
+						{
+							"key": "nohp",
+							"value": "1234567890",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "olla@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://192.168.0.102/edukasi_server/postPegawai.php",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"path": [
+						"edukasi_server",
+						"postPegawai.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updatePegawai",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "nama",
+							"value": "budi",
+							"type": "text"
+						},
+						{
+							"key": "nobp",
+							"value": "123",
+							"type": "text"
+						},
+						{
+							"key": "nohp",
+							"value": "123",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "budi@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://192.168.0.102/edukasi_server/updatePegawai.php?id=1",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"path": [
+						"edukasi_server",
+						"updatePegawai.php"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletePegawai",
+			"request": {
+				"method": "GET",
+				"header": []
 			},
 			"response": []
 		}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:edukasiapp/models/model_login.dart';
+import 'package:edukasiapp/models/ModelLogin.dart';
 import 'package:edukasiapp/views/page_list_berita.dart';
+import 'package:edukasiapp/views/home.dart';
 import 'package:edukasiapp/views/register.dart';
 import 'package:http/http.dart' as http;
 import 'package:edukasiapp/utils/session_manager.dart';
@@ -19,13 +20,13 @@ class _LoginState extends State<Login> {
   GlobalKey<FormState> keyForm = GlobalKey<FormState>();
 
   bool isLoading = false;
- Future<void> loginAccount() async {
+ Future<ModelLogin?> loginAccount() async {
   try {
     setState(() {
       isLoading = true;
     });
     http.Response res = await http.post(
-      Uri.parse('http://192.168.0.104/edukasi_server/login.php'),
+      Uri.parse('http://192.168.0.102/edukasi_server/login.php'),
       body: {
         "username": txtUsername.text,
         "password": txtPassword.text,
@@ -33,40 +34,45 @@ class _LoginState extends State<Login> {
     );
 
     ModelLogin data = modelLoginFromJson(res.body);
-    if (data.isLoginSuccess()) {
-      sessionManager.saveSession(data.value, data.id, data.username, data.nama);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => ListBerita()),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('${data.message}')));
-    }
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-  } finally {
-    setState(() {
+      //cek kondisi respon
+      if (data.value == 1) {
+        setState(() {
+          isLoading = false;
+          sessionManager.saveSession(data.value ?? 0, data.id ?? "", data.username ?? "", data.nama ?? "");
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('${data.message}')));
+          //kondisi berhasil dan pindah ke page login
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+                  (route) => false);
+        });
+        //kondisi email sudah ada
+      } else if (data.value == 2) {
+        setState(() {
+          isLoading = false;
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('${data.message}')));
+        });
+        //kondisi gagal daftar
+      } else {
+        isLoading = false;
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('${data.message}')));
+      }
+    } catch (e) {
       isLoading = false;
-    });
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
+    }
   }
-}
+
+
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(213, 13, 204, 19),
-        title: Text(
-          'Silahkan Masuk',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
       body: Stack(
         children: [
           Positioned.fill(
@@ -114,22 +120,31 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         SizedBox(height: 10),
-                        isLoading
-                            ? Center(
-                                child: CircularProgressIndicator(),
-                              )
-                            : MaterialButton(
-                                minWidth: 120,
-                                height: 45,
-                                onPressed: () {
-                                  if (keyForm.currentState?.validate() == true) {
-                                    loginAccount();
-                                  }
-                                },
-                                child: Text('Login'),
-                                color: Color.fromARGB(213, 13, 204, 19),
-                                textColor: Colors.white,
-                              ),
+                        Center(
+                            child: isLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : MaterialButton(
+                              minWidth: 120,
+                                    height: 45,
+                                    onPressed: () {
+                                 
+                                      // if (keyForm.currentState!.validate()) {
+                                      //   loginAccount();
+                                      // }
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: 
+                                        (context) => Home()
+                                        ),
+                                        );
+                                    },
+                                    child: Text('Login'),
+                                    color: Colors.blue,
+                                    textColor: Colors.white,
+                                  ),
+                          ),
                         SizedBox(height: 10),
                         TextButton(
                           onPressed: () {

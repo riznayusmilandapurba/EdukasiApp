@@ -1,6 +1,6 @@
 <?php
 
-header("Access-Control-Allow-Origin: header");
+// header("Access-Control-Allow-Origin: header");
 header("Access-Control-Allow-Origin: *");
 
 include 'koneksi.php';

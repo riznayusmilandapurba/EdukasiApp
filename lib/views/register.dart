@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:edukasiapp/views/login.dart';
 import 'package:flutter/material.dart';
 import 'package:edukasiapp/models/model_register.dart';
-import 'package:edukasiapp/views/login.dart';
 import 'package:http/http.dart' as http;
 
 class Register extends StatefulWidget {
@@ -28,7 +27,7 @@ class _RegisterState extends State<Register> {
         isLoading = true;
       });
       http.Response res = await http.post(
-          Uri.parse('http://192.168.0.104:8080/edukasi_server/register.php'),
+          Uri.parse('http://192.168.0.102/edukasi_server/register.php'),
           body: {
             "nama": txtNama.text,
             "username": txtUsername.text,
@@ -74,19 +73,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(213, 13, 204, 19),
-        title: Text(
-          'Silahkan Register',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
-      body: Container(
+    body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('images/grandcanyon.jpeg'),
@@ -156,6 +143,10 @@ class _RegisterState extends State<Register> {
                             controller: txtEmail,
                             decoration: InputDecoration(
                               hintText: "Email",
+                              hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 10,
+                            ),
                             ),
                           ),
                          
@@ -167,26 +158,31 @@ class _RegisterState extends State<Register> {
                             controller: txtNohp,
                             decoration: InputDecoration(
                               hintText: "No. Handphone",
+                              hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 10,
+                            ),
                             ),
                           ),
                           SizedBox(height: 10),
-                          isLoading
-                              ? const Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              : MaterialButton(
-                                  minWidth: 120,
-                                  height: 45,
-                                  onPressed: () {
-                                    if (keyForm.currentState?.validate() ==
-                                        true) {
-                                      registerAccount();
-                                    }
-                                  },
-                                  child: Text('Register'),
-                                  color: Color.fromARGB(213, 13, 204, 19),
-                                  textColor: Colors.white,
-                                ),
+                          Center(
+                            child: isLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : MaterialButton(
+                              minWidth: 120,
+                                    height: 45,
+                                    onPressed: () {
+                                      if (keyForm.currentState?.validate() == true) {
+                                        registerAccount();
+                                      }
+                                    },
+                                    child: Text('Register'),
+                                    color: Colors.blue,
+                                    textColor: Colors.white,
+                                  ),
+                          ),
                           SizedBox(height: 10),
                           TextButton(
                             onPressed: () {
