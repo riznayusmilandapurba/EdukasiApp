@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:edukasiapp/views/page_list_berita.dart';
 import 'package:edukasiapp/views/page_list_gallery.dart';
 import 'package:edukasiapp/views/page_list_pegawai.dart';
+import 'package:edukasiapp/views/page_user.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class Home extends StatefulWidget {
@@ -13,7 +14,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _pageIndex = 0;
-  Color _backgroundColor = Colors.transparent;
+  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
   final List<Widget> _pages = [
     ListBerita(),
@@ -70,30 +71,17 @@ class _HomeState extends State<Home> {
         ),
       ),
       bottomNavigationBar: CurvedNavigationBar(
-      backgroundColor: _backgroundColor,
+      backgroundColor: Colors.transparent,
       items: <Widget>[
         Icon(Icons.home, size: 30),
         Icon(Icons.article, size: 30),
         Icon(Icons.account_circle, size: 30),
         Icon(Icons.photo_library, size: 30),
+        Icon(Icons.verified_user, size: 30),
       ],
       onTap: (index) {
           setState(() {
             _pageIndex = index;
-            switch (index) {
-              case 0:
-                _backgroundColor = Colors.green;
-                break;
-              case 1:
-                _backgroundColor = Colors.green;
-                break;
-              case 2:
-                _backgroundColor = Colors.green;
-                break;
-              case 3:
-                _backgroundColor = Colors.green;
-                break;
-            }
           });
         switch (index) {
           case 0:
@@ -118,6 +106,12 @@ class _HomeState extends State<Home> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => ListGallery()),
+            );
+            break;
+          case 4:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => PageUser()),
             );
             break;
         }

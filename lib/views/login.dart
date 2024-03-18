@@ -20,25 +20,26 @@ class _LoginState extends State<Login> {
   GlobalKey<FormState> keyForm = GlobalKey<FormState>();
 
   bool isLoading = false;
- Future<ModelLogin?> loginAccount() async {
-  try {
-    setState(() {
-      isLoading = true;
-    });
-    http.Response res = await http.post(
-      Uri.parse('http://192.168.0.102/edukasi_server/login.php'),
-      body: {
-        "username": txtUsername.text,
-        "password": txtPassword.text,
-      },
-    );
 
-    ModelLogin data = modelLoginFromJson(res.body);
+  Future<ModelLogin?> loginAccount() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      http.Response res = await http.post(
+          Uri.parse('http://192.168.16.168/edukasi_server/login.php'),
+          body: {
+            "username": txtUsername.text,
+            "password": txtPassword.text,
+
+          });
+
+      ModelLogin data = modelLoginFromJson(res.body);
       //cek kondisi respon
       if (data.value == 1) {
         setState(() {
           isLoading = false;
-          sessionManager.saveSession(data.value ?? 0, data.id ?? "", data.username ?? "", data.nama ?? "");
+          sessionManager.saveSession(data.value ?? 0, data.id ?? "", data.username ?? "", data.nama ?? "", data.email ?? "", data.nohp ?? "");
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text('${data.message}')));
           //kondisi berhasil dan pindah ke page login
@@ -67,60 +68,68 @@ class _LoginState extends State<Login> {
     }
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.asset(
-              'images/grandcanyon.jpeg',
-              fit: BoxFit.cover,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(35),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Card(
-                  child: Padding(
-                    padding: EdgeInsets.all(25),
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          validator: (val) {
-                            return val!.isEmpty ? "Tidak Boleh kosong" : null;
-                          },
-                          controller: txtUsername,
-                          decoration: InputDecoration(
-                            hintText: "Username",
-                            hintStyle: TextStyle(
+      body: Padding(
+        padding: EdgeInsets.all(10),
+        child: SingleChildScrollView(
+          child: Card(
+            elevation: 3,
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Form(
+                key: keyForm,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Form Login',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      validator: (val) {
+                        return val!.isEmpty ? "Tidak Boleh kosong" : null;
+                      },
+                      controller: txtUsername,
+                      decoration: InputDecoration(
+                        hintText: "Username",
+                        hintStyle: TextStyle(
                               color: Colors.grey,
                               fontSize: 14,
                             ),
-                          ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        SizedBox(height: 10),
-                        TextFormField(
-                          validator: (val) {
-                            return val!.isEmpty ? "Tidak Boleh kosong" : null;
-                          },
-                          controller: txtPassword,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            hintText: "Password",
-                            hintStyle: TextStyle(
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    TextFormField(
+                      validator: (val) {
+                        return val!.isEmpty ? "Tidak Boleh kosong" : null;
+                      },
+                      controller: txtPassword,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        hintText: "Password",
+                        hintStyle: TextStyle(
                               color: Colors.grey,
                               fontSize: 14,
                             ),
-                          ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        SizedBox(height: 10),
-                        Center(
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                          Center(
                             child: isLoading
                                 ? const Center(
                                     child: CircularProgressIndicator(),
@@ -129,47 +138,40 @@ class _LoginState extends State<Login> {
                               minWidth: 120,
                                     height: 45,
                                     onPressed: () {
-                                 
-                                      // if (keyForm.currentState!.validate()) {
-                                      //   loginAccount();
-                                      // }
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: 
-                                        (context) => Home()
-                                        ),
-                                        );
+                                      if (keyForm.currentState?.validate() == true) {
+                                        loginAccount();
+                                      }
                                     },
                                     child: Text('Login'),
-                                    color: Colors.blue,
+                                    color: Colors.green,
                                     textColor: Colors.white,
                                   ),
                           ),
-                        SizedBox(height: 10),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(builder: (context) => Register()),
-                              (route) => false,
-                            );
-                          },
-                          child: Text(
-                            'Belum Punya Akun ? Silahkan Register',
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Color.fromARGB(213, 13, 204, 19),
+                          SizedBox(height: 10),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Register(),
+                                ),
+                                (route) => false,
+                              );
+                            },
+                            child: Text(
+                              'Anda Belum Punya Akun ? Silahkan Register',
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Color.fromARGB(213, 13, 204, 19),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }

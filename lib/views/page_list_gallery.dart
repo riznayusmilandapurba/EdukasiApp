@@ -6,6 +6,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:edukasiapp/models/model_berita.dart';
+import 'package:edukasiapp/views/page_user.dart';
 import 'package:edukasiapp/views/page_list_detail_gallery.dart';
 
 class ListGallery extends StatefulWidget {
@@ -17,7 +18,7 @@ class ListGallery extends StatefulWidget {
 
 class _ListGalleryState extends State<ListGallery> {
   int _pageIndex = 0;
- Color _backgroundColor = Colors.transparent;
+ GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   final List<Widget> _pages = [
     ListBerita(),
     ListPegawai(),
@@ -27,7 +28,7 @@ class _ListGalleryState extends State<ListGallery> {
 
    Future<List<Datum>?> getBerita() async{
     try{
-      http.Response res = await http.get(Uri.parse('http://192.168.0.102/edukasi_server/getBerita.php'));
+      http.Response res = await http.get(Uri.parse('http://192.168.16.168/edukasi_server/getBerita.php'));
       return modeljudulFromJson(res.body).data;
     }catch(e){
       setState(() {
@@ -73,7 +74,7 @@ class _ListGalleryState extends State<ListGallery> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: Image.network(
-                                  'http://192.168.0.102/edukasi_server/gambar_berita/${data?.gambar}',
+                                  'http://192.168.16.168/edukasi_server/gambar_berita/${data?.gambar}',
                                   fit: BoxFit.cover, // Menggunakan BoxFit.cover agar gambar mengisi area dengan mempertahankan aspek rasio
                                 ),
                               ),
@@ -99,60 +100,54 @@ class _ListGalleryState extends State<ListGallery> {
           ),
         ),
       ),
-    bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: _backgroundColor,
-        items: <Widget>[
-          Icon(Icons.home, size: 30),
-          Icon(Icons.article, size: 30),
-          Icon(Icons.account_circle, size: 30),
-          Icon(Icons.photo_library, size: 30),
-        ],
-        onTap: (index) {
+     bottomNavigationBar: CurvedNavigationBar(
+     backgroundColor: Colors.transparent,
+      items: <Widget>[
+        Icon(Icons.home, size: 30),
+        Icon(Icons.article, size: 30),
+        Icon(Icons.account_circle, size: 30),
+        Icon(Icons.photo_library, size: 30),
+        Icon(Icons.verified_user, size: 30),
+      ],
+      onTap: (index) {
           setState(() {
             _pageIndex = index;
-            switch (index) {
-              case 0:
-                _backgroundColor = Colors.green;
-                break;
-              case 1:
-                _backgroundColor = Colors.green;
-                break;
-              case 2:
-                _backgroundColor = Colors.green;
-                break;
-              case 3:
-                _backgroundColor = Colors.green;
-                break;
-            }
+            
           });
-          switch (index) {
-            case 0:
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => Home()),
-              );
-              break;
-            case 1:
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => ListBerita()),
-              );
-              break;
-            case 2:
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => ListPegawai()),
-              );
-              break;
-            case 3:
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => ListGallery()),
-              );
-              break;
-          }
-        },
-      ),
+        switch (index) {
+          case 0:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+            );
+            break;
+          case 1:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => ListBerita()),
+            );
+            break;
+          case 2:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => ListPegawai()),
+            );
+            break;
+          case 3:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => ListGallery()),
+            );
+            break;
+          case 4:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => PageUser()),
+            );
+            break;
+        }
+      },
+    ),
 
     );
   }

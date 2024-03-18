@@ -27,7 +27,7 @@ class _RegisterState extends State<Register> {
         isLoading = true;
       });
       http.Response res = await http.post(
-          Uri.parse('http://192.168.0.102/edukasi_server/register.php'),
+          Uri.parse('http://192.168.16.168/edukasi_server/register.php'),
           body: {
             "nama": txtNama.text,
             "username": txtUsername.text,
@@ -74,12 +74,6 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
     body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('images/grandcanyon.jpeg'),
-            fit: BoxFit.cover,
-          ),
-        ),
         child: Form(
           key: keyForm,
           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -88,6 +82,15 @@ class _RegisterState extends State<Register> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  Text(
+                      'Form Register',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green,
+                      ),
+                      textAlign: TextAlign.center,
+                  ),
                   Card(
                     child: Padding(
                       padding: EdgeInsets.all(25),
@@ -179,7 +182,7 @@ class _RegisterState extends State<Register> {
                                       }
                                     },
                                     child: Text('Register'),
-                                    color: Colors.blue,
+                                    color: Colors.green,
                                     textColor: Colors.white,
                                   ),
                           ),

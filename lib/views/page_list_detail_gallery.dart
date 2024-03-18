@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:edukasiapp/models/model_berita.dart';
 
+
 class PageDetailGallery extends StatelessWidget {
 
    final Datum? data;
@@ -31,7 +32,7 @@ class PageDetailGallery extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
-                    'http://192.168.0.102/edukasi_server/gambar_berita/${data?.gambar}',
+                    'http://192.168.16.168/edukasi_server/gambar_berita/${data?.gambar}',
                     fit: BoxFit.fill,
                   ),
                 ),

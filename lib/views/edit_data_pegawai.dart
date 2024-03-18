@@ -50,7 +50,7 @@ class _EditDataPegawaiState extends State<EditDataPegawai> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.0.102/edukasi_server/updatePegawai.php'),
+        Uri.parse('http://192.168.16.168/edukasi_server/updatePegawai.php'),
         body: {
           "id": widget.id,
           "nama": _txtNama.text,
@@ -60,10 +60,6 @@ class _EditDataPegawaiState extends State<EditDataPegawai> {
         },
       );
 
-      // Handle response
-      // ...
-
-      // Navigasi ke halaman list berita setelah berhasil diedit
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => ListPegawai()),

@@ -8,6 +8,7 @@ import 'package:edukasiapp/views/edit_data_pegawai.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:edukasiapp/views/page_list_berita.dart';
 import 'package:http/http.dart' as http;
+import 'package:edukasiapp/views/page_user.dart';
 
 class ListPegawai extends StatefulWidget {
   const ListPegawai({super.key});
@@ -18,6 +19,7 @@ class ListPegawai extends StatefulWidget {
 
 class _ListPegawaiState extends State<ListPegawai> {
   int _pageIndex = 0;
+  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   Color _backgroundColor = Colors.transparent;
   late List<Datum> _pegawaiList;
   late List<Datum> _filteredPegawai;
@@ -34,7 +36,7 @@ class _ListPegawaiState extends State<ListPegawai> {
 
 Future<void> _getPegawai() async {
     try {
-      final response = await http.get(Uri.parse('http://192.168.0.102/edukasi_server/getPegawai.php'));
+      final response = await http.get(Uri.parse('http://192.168.16.168/edukasi_server/getPegawai.php'));
       if (response.statusCode == 200) {
         final List<Datum> pegawaiList = ModelPegawaiFromJson(response.body).data!;
         setState(() {
@@ -54,7 +56,7 @@ Future<void> _getPegawai() async {
   Future<void> _deletePegawai(int id) async {
   try {
     http.Response res = await http.post(
-      Uri.parse('http://192.168.0.102/edukasi_server/deletePegawai.php'),
+      Uri.parse('http://192.168.16.168/edukasi_server/deletePegawai.php'),
       body: {'id': id.toString()}, 
     );
     if (res.statusCode == 200) {
@@ -213,59 +215,53 @@ Future<void> _getPegawai() async {
   ],
 ),
   bottomNavigationBar: CurvedNavigationBar(
-  backgroundColor: _backgroundColor,
-  items: <Widget>[
-    Icon(Icons.home, size: 30),
-    Icon(Icons.article, size: 30),
-    Icon(Icons.account_circle, size: 30),
-    Icon(Icons.photo_library, size: 30),
-  ],
-   onTap: (index) {
+      backgroundColor: Colors.transparent,
+      items: <Widget>[
+        Icon(Icons.home, size: 30),
+        Icon(Icons.article, size: 30),
+        Icon(Icons.account_circle, size: 30),
+        Icon(Icons.photo_library, size: 30),
+        Icon(Icons.verified_user, size: 30),
+      ],
+      onTap: (index) {
           setState(() {
             _pageIndex = index;
-            switch (index) {
-              case 0:
-                _backgroundColor = Colors.green;
-                break;
-              case 1:
-                _backgroundColor = Colors.green;
-                break;
-              case 2:
-                _backgroundColor = Colors.green;
-                break;
-              case 3:
-                _backgroundColor = Colors.green;
-                break;
-            }
+            
           });
-    switch (index) {
-      case 0:
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => Home()),
-        );
-        break;
-      case 1:
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => ListBerita()),
-        );
-        break;
-      case 2:
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => ListPegawai()),
-        );
-        break;
-      case 3:
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => ListGallery()),
-        );
-        break;
-    }
-  },
-),
+        switch (index) {
+          case 0:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+            );
+            break;
+          case 1:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => ListBerita()),
+            );
+            break;
+          case 2:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => ListPegawai()),
+            );
+            break;
+          case 3:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => ListGallery()),
+            );
+            break;
+          case 4:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => PageUser()),
+            );
+            break;
+        }
+      },
+    ),
 
     );
   }

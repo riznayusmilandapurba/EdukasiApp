@@ -28,7 +28,7 @@ class _TambahDataPegawaiState extends State<TambahDataPegawai> {
         isLoading = true;
       });
       http.Response res = await http.post(
-        Uri.parse('http://192.168.0.102/edukasi_server/postPegawai.php'),
+        Uri.parse('http://192.168.16.168/edukasi_server/postPegawai.php'),
         body: {
           "nama": txtNama.text,
           "nobp": txtNobp.text,

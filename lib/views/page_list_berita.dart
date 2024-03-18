@@ -5,6 +5,7 @@ import 'package:edukasiapp/views/page_detail_berita.dart';
 import 'package:edukasiapp/views/page_list_gallery.dart';
 import 'package:edukasiapp/views/home.dart';
 import 'package:edukasiapp/views/page_list_pegawai.dart';
+import 'package:edukasiapp/views/page_user.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 
@@ -18,7 +19,7 @@ class ListBerita extends StatefulWidget {
 
 class _ListBeritaState extends State<ListBerita> {
   int _pageIndex = 0;
-  Color _backgroundColor = Colors.transparent;
+  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   late List<Datum> _beritaList;
   late List<Datum> _filteredBerita;
   late TextEditingController _searchController;
@@ -34,7 +35,7 @@ class _ListBeritaState extends State<ListBerita> {
 
   Future<void> _getBerita() async {
     try {
-      http.Response res = await http.get(Uri.parse('http://192.168.0.102/edukasi_server/getBerita.php'));
+      http.Response res = await http.get(Uri.parse('http://192.168.16.168/edukasi_server/getBerita.php'));
       List<Datum> beritaList = modeljudulFromJson(res.body).data ?? [];
       setState(() {
         _beritaList = beritaList;
@@ -102,7 +103,7 @@ class _ListBeritaState extends State<ListBerita> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(
-                            'http://192.168.0.102/edukasi_server/gambar_berita/${data.gambar}',
+                            'http://192.168.16.168/edukasi_server/gambar_berita/${data.gambar}',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -133,37 +134,22 @@ class _ListBeritaState extends State<ListBerita> {
         ),
       ),
       bottomNavigationBar: CurvedNavigationBar(
-      backgroundColor: _backgroundColor,
+      backgroundColor: Colors.transparent,
       items: <Widget>[
         Icon(Icons.home, size: 30),
         Icon(Icons.article, size: 30),
         Icon(Icons.account_circle, size: 30),
         Icon(Icons.photo_library, size: 30),
+        Icon(Icons.verified_user, size: 30),
       ],
       onTap: (index) {
           setState(() {
             _pageIndex = index;
-            switch (index) {
-              case 0:
-                _backgroundColor = Colors.green;
-                break;
-              case 1:
-                _backgroundColor = Colors.green;
-                break;
-              case 2:
-                _backgroundColor = Colors.green;
-                break;
-              case 3:
-                _backgroundColor = Colors.green;
-                break;
-            }
           });
         switch (index) {
           case 0:
-          
             Navigator.pushReplacement(
               context,
-              
               MaterialPageRoute(builder: (context) => Home()),
             );
             break;
@@ -185,10 +171,15 @@ class _ListBeritaState extends State<ListBerita> {
               MaterialPageRoute(builder: (context) => ListGallery()),
             );
             break;
+          case 4:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => PageUser()),
+            );
+            break;
         }
       },
     ),
-
     );
   }
 }
